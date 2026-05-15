@@ -15,16 +15,25 @@ function App() {
       .then(res => res.json())
       .then(data => {
         if (!data.meals) { setRecipes([]); setLoading(false); return; }
-        const formatted = data.meals.map(m => ({
-          id: m.idMeal,
-          name: m.strMeal,
-          country: m.strArea,
-          image: m.strMealThumb,
-          description: m.strInstructions,
-          category: m.strCategory,
-          tags: m.strTags ? m.strTags.split(',').map(t => t.trim()).filter(Boolean) : [],
-          isFavorite: false
-        }));
+        const formatted = data.meals.map(m => {
+          const ingredients = [];
+          for (let i = 1; i <= 20; i++) {
+            const ing = m[`strIngredient${i}`];
+            const meas = m[`strMeasure${i}`];
+            if (ing && ing.trim()) ingredients.push(`${meas ? meas.trim() : ''} ${ing.trim()}`.trim());
+          }
+          return {
+            id: m.idMeal,
+            name: m.strMeal,
+            country: m.strArea,
+            image: m.strMealThumb,
+            description: m.strInstructions,
+            category: m.strCategory,
+            tags: m.strTags ? m.strTags.split(',').map(t => t.trim()).filter(Boolean) : [],
+            ingredients,
+            isFavorite: false
+          };
+        });
         setRecipes(formatted);
         setLoading(false);
       })

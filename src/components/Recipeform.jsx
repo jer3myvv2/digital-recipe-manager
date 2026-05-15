@@ -43,8 +43,9 @@ const RecipeForm = ({ onAdd, onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.name.trim()) return;
+
     onAdd({ ...form, id: Date.now(), isFavorite: false });
-    setForm({ name: '', country: '', image: '', description: '', category: '' });
+    setForm({ name: '', country: '', image: '', description: '', ingredients: [], category: '' });
   };
 
   const canSubmit = form.name.trim().length > 0;
@@ -116,6 +117,18 @@ const RecipeForm = ({ onAdd, onClose }) => {
               onBlur={blurStyle}
             />
           </div>
+        </div>
+
+        <div>
+          <Label>Ingredients</Label>
+          <input
+            placeholder="e.g. 200g chicken, 100ml yogurt..."
+            value={form.ingredients}
+            onChange={e => set('ingredients', e.target.value)}
+            style={fieldStyle}
+            onFocus={focusStyle}
+            onBlur={blurStyle}
+          />
         </div>
 
         <div>

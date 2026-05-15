@@ -121,6 +121,29 @@ const RecipeCard = ({ recipe, onFavorite, onDelete, onClick }) => {
           {recipe.description?.substring(0, 110)}...
         </p>
 
+        {recipe.ingredients && recipe.ingredients.length > 0 && (
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '6px',
+            marginTop: '12px'
+          }}>
+            {recipe.ingredients.slice(0, 3).map((ing, idx) => (
+              <span key={idx} style={{
+                background: '#F1F5F9',
+                color: '#0f172A',
+                padding: '5px 9px',
+                borderRadius: '20px',
+                fontSize: '0.68rem',
+                fontWeight: '600',
+              }}
+              >
+                {typeof ing === 'string' ? ing : ing.name}
+              </span>
+            ))}
+          </div>
+        )}
+
         <div style={{
           display: 'flex',
           gap: '12px',
